@@ -5,8 +5,6 @@ function setup() {
     createCanvas(1500, 800);
     frameRate(30);
     noStroke();
-
-    controller.init();
 }
 
 function draw() {
@@ -34,7 +32,7 @@ function keyPressed() {
     if (keyCode == 80) {
         controller.bubbleSort();
     }
-    console.log(keyCode);
+    //console.log(keyCode);
 }
 
 function areColliding(x1, y1, w1, h1, x2, y2, w2, h2) {
