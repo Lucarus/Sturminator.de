@@ -1,0 +1,87 @@
+@font-face {
+    font-family: Ostrich-Sans-Black;
+    src: url(fonts/ostrich-sans-black.woff);
+}
+
+body {
+    margin: 50px;
+    margin-top: 25px; 
+    margin-bottom: 25px;
+    padding: 0;
+
+    background-color: #e5ffec;
+    overflow: hidden;
+}
+
+.project-container {
+    text-align: center;
+}
+
+.project {
+    display: inline-block;
+
+    margin: 10px;
+    padding: 20px;
+    background-color: #e5ffec;
+    /*F7DDC8*/
+    border-radius: 20px;
+
+    text-align: left;
+    color: #222222;
+}
+
+.project:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+
+    cursor: pointer;
+}
+
+.project:hover img {
+    height: 280px;
+    margin-bottom: 0;
+}
+
+.project img {
+    height: 260px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    -webkit-transition: height 0.5s ease-in-out, margin 0.5s ease-in-out;
+    transition: height 0.5s ease-in-out, margin 0.5s ease-in-out;
+}
+
+.project h4 {
+    text-align: center;
+    color: #429EA6;
+
+    font-size: 3em;
+    font-family: Ostrich-Sans-Black;
+    font-weight: 300;
+}
+
+.headline {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.headline h1 {
+    color: #429EA6;
+    font-family: Ostrich-Sans-Black;
+    font-size: 6em;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    body {
+        margin: 0px;
+        margin-top: 25px; 
+        margin-bottom: 25px;
+
+        overflow: auto;
+        overflow-x: hidden; 
+    }
+
+    .headline h1 {
+        font-size: 5em;
+    }
+}

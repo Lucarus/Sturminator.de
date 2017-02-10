@@ -1,0 +1,44 @@
+<html>
+    <canvas id="canv" width="1900" height="1000"></canvas>
+    <form id="settingsForm">
+        <label for="maxCon">max. Verbindungen</label>
+        <input name="maxCon" id="maxCon" type="number" value="12">
+        <label for="minCon">min. Verbindungen</label>
+        <input name="minCon" id="minCon" type="number" value="6">
+        <label for="speed">Speed-Multiplikator</label>
+        <input name="speed" id="speed" type="number" value="2">
+        <label for="balls">Menge klick</label>
+        <input name="balls" type="number" value="100">
+        <label for="decRadius">Radius</label>
+        <input name="decRadius" id="decRadius" type="number" value="100">
+        <label for="showRadius">Zeige Rahmen</label>
+        <input name="showRadius" id="showRadius" type="button" onclick="showHitbox = !showHitbox;" value="true">
+        <label for="connectRadius">max. Verbindungsabstand</label>
+        <input name="connectRadius" type="number" value="100">
+    </form>
+    <script src="canvasScript.js"></script>
+    <button onclick="setSettings()"> Aktualisieren </button>
+    <button onclick="resetCan()"> Reset </button>
+    <script>
+        setSettings();
+    </script>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            display: block;
+            background-color: #333333;
+            border: 1px solid red;
+        }
+        input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+    </style>
+
+</html>
