@@ -7,28 +7,9 @@ function Controller() {
     this.normForm = {W: 400, H: 30, R: 10};
 
     this.animator = new Animator(this.sortElements);
-    //this.controllManager = new ControllManager();
-
-    this.init = function() {
-        //this.controllManager.addControll(new Button({X: 100, Y: 20}, {W: 100, H: 20}, "Sort", this.bubbleSort));
-    }
 
     this.bubbleSort = function() {  
-        console.log(this.sortElements);
-        for (var x = 0; x < this.sortElements.length; x++) {
-            for (var i = 1; i < this.sortElements.length - x; i++) {
-                if (this.sortElements[i-1].value > this.sortElements[i].value) {
-                    temp = this.sortElements[i];
-                    this.sortElements[i] = this.sortElements[i-1];
-                    this.sortElements[i-1] = temp;
-                    setTimeout(function() {
-                        this.animator.displace(i - 1, {X: this.sortElements[i].location.X, Y: this.sortElements[i].location.Y});
-                        this.animator.displace(i, {X: this.sortElements[i-1].location.X, Y: this.sortElements[i-1].location.Y});    
-                    }, i * 1000);    
-                }
-            }
-        }
-        //this.placeInOrder(this.sortElements);
+        this.isBubblesorting = true;
     }
 
     // Sortieritem auswählen
@@ -61,11 +42,47 @@ function Controller() {
         }
     }
 
+    this.isBubblesorting = false;
+    this.bubbleSort_i = 1;
+    this.bubbleSort_x = 0;
+    this.SORT_TIME =  50;
+    this.nextSteppIn = 0;
+
     // Alle Sortieritems updaten lassen
     this.update = function() {
 
         // anderes Zeig Animationen etc...
+        if (this.isBubblesorting) {
+            if (this.nextSteppIn <= 0) {
+                if (this.bubbleSort_x < this.sortElements.length) {
+                    if (this.bubbleSort_i < this.sortElements.length - this.bubbleSort_x) {
+                        if ( this.sortElements[this.bubbleSort_i-1].value > this.sortElements[this.bubbleSort_i].value) {
+                            temp = this.sortElements[this.bubbleSort_i];
+                            this.sortElements[this.bubbleSort_i] = this.sortElements[this.bubbleSort_i-1];
+                            this.sortElements[this.bubbleSort_i-1] = temp;
+                            this.animator.displace(this.bubbleSort_i - 1, {X: this.sortElements[this.bubbleSort_i].location.X, Y: this.sortElements[this.bubbleSort_i].location.Y});
+                            this.animator.displace(this.bubbleSort_i, {X: this.sortElements[this.bubbleSort_i-1].location.X, Y: this.sortElements[this.bubbleSort_i-1].location.Y});    
 
+                            this.nextSteppIn = this.SORT_TIME;
+                        } else {
+                            this.bubbleSort_i++;
+                        }
+                    } else if (this.bubbleSort_i >= this.sortElements.length) {
+                        this.bubbleSort_i = 1;
+                        this.bubbleSort_x++;
+                    }
+                } else {
+                    this.isBubblesorting = false;
+                    this.bubbleSort_i = 1;
+                    this.bubbleSort_x = 0;
+                    this.SORT_TIME =  40;
+                    this.nextSteppIn = 0;
+                }
+            } else {
+                this.nextSteppIn--;
+            }
+        }
+        
         // Animationen updaten
         this.animator.update();
 
