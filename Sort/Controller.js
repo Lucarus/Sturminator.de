@@ -3,7 +3,7 @@ function Controller() {
     this.normForm = {W: 400, H: 30, R: 10};
 
     this.sortElements = [];
-    this.sortHighlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 0, "", "rgba(0,255,0, 0.25)");
+    this.sortHighlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 0, "", "rgba(0,255,0, 0.75)");
     this.liftedItemIndex = -1;
 
     this.animator = new Animator(this.sortElements);
@@ -46,6 +46,7 @@ function Controller() {
     this.bubbleSort_i = 1;
     this.bubbleSort_x = 0;
     this.SORT_TIME =  50;
+    this.NOSORT_TIME = 10;
     this.nextSteppIn = 0;
 
     // Alle Sortieritems updaten lassen
@@ -68,6 +69,8 @@ function Controller() {
                             X: this.sortElements[this.bubbleSort_i - 1].location.X - 5,
                             Y: this.sortElements[this.bubbleSort_i - 1].location.Y - 5
                         };
+                        // kurze Zeit warten auch wenn kein Element gefunde wurde
+                        this.nextSteppIn = this.NOSORT_TIME;
 
                         //Klassisches tauschen, wenn die verglichenen Elemente .... sind.
                         if ( this.sortElements[this.bubbleSort_i-1].value > this.sortElements[this.bubbleSort_i].value) {
