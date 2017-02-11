@@ -1,10 +1,10 @@
 
 function Controller() {
+    this.normForm = {W: 400, H: 30, R: 10};
 
     this.sortElements = [];
+    this.sortHighlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 0, "", "rgba(0,255,0, 0.25)");
     this.liftedItemIndex = -1;
-
-    this.normForm = {W: 400, H: 30, R: 10};
 
     this.animator = new Animator(this.sortElements);
 
@@ -63,6 +63,12 @@ function Controller() {
                 if (this.bubbleSort_x < this.sortElements.length) {
                     //Innere Schleife des Bubblesorts
                     if (this.bubbleSort_i < this.sortElements.length - this.bubbleSort_x) {
+                        // Highlight an richtige stelle Setzen
+                        this.sortHighlight.location = {
+                            X: this.sortElements[this.bubbleSort_i - 1].location.X - 5,
+                            Y: this.sortElements[this.bubbleSort_i - 1].location.Y - 5
+                        };
+
                         //Klassisches tauschen, wenn die verglichenen Elemente .... sind.
                         if ( this.sortElements[this.bubbleSort_i-1].value > this.sortElements[this.bubbleSort_i].value) {
                             temp = this.sortElements[this.bubbleSort_i];
@@ -89,6 +95,8 @@ function Controller() {
                     this.bubbleSort_i = 1;
                     this.bubbleSort_x = 0;
                     this.nextSteppIn = 0;
+
+                    this.sortHighlight.location = {X: -1000, Y: -1000};
                 }
             } else {
                 this.nextSteppIn--;
@@ -97,6 +105,12 @@ function Controller() {
         
         // Animationen updaten
         this.animator.update();
+
+        // ! Achtung !
+        // Die Reihenfolge ist hier entscheident
+
+        // Sortelement Highlight zeichenen
+        this.sortHighlight.draw();
 
         // alle Elemente zeichnen
         this.sortElements.forEach(function(sortitem) {
