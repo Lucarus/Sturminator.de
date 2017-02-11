@@ -1,11 +1,11 @@
-function Sortitem(X, Y, width, height, radius, value) {
+function Sortitem(X, Y, width, height, radius, value, color) {
 
     // Eigenschaften
     this.text = value;
     this.value = value;
     this.location = {X: X, Y: Y};
     this.form = {H: height || 100, W: width || 30, R: radius || 10};
-    this.color = "#222222";
+    this.color = color || "#222222";
     this.isUp = false;
 
     // Zeichnen
