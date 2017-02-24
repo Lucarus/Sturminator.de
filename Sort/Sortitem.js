@@ -4,7 +4,11 @@ function Sortitem(X, Y, width, height, radius, value, color) {
     this.text = value;
     this.value = value;
     this.location = {X: X, Y: Y};
-    this.form = {H: height || 100, W: width || 30, R: radius || 10};
+    if (width === "value") {
+        this.form = {H: height, W: Math.round(value * 15), R: radius};
+    } else {
+        this.form = {H: height, W: width, R: radius};
+    }
     this.color = color || "#222222";
     this.isUp = false;
 
@@ -18,8 +22,8 @@ function Sortitem(X, Y, width, height, radius, value, color) {
         // Element selbst zeichnen
         fill(this.color);
         rect(this.location.X, this.location.Y, this.form.W, this.form.H, this.form.R);
-        fill("white");
-        text(this.text, this.location.X + 5, this.location.Y + 5, this.location.X + this.form.W - 5, this.location.Y + this.form.H - 5);
+        //fill("white");
+        //text(this.text, this.location.X + 5, this.location.Y + 5, this.location.X + this.form.W - 5, this.location.Y + this.form.H - 5);
     }
 
     this.toggleUp = function() {

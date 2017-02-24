@@ -6,7 +6,6 @@ function setup() {
     createCanvas(1500, 800);
     frameRate(GAME_FPS);
     noStroke();
-<<<<<<< HEAD
 
     controller.init();
 
@@ -16,8 +15,6 @@ function setup() {
     document.getElementById("forwardStepp").onclick = function() { controller.sortStepp(); };
     document.getElementById("runSort").onclick = function() { controller.runThrough(); };
     document.getElementById("runShuffle").onclick = function() { controller.shuffle(); };
-=======
->>>>>>> Produktiv
 }
 
 function draw() {
@@ -43,12 +40,9 @@ function keyPressed() {
     if (keyCode == 68) {
         controller.sortStepp();
     }
-<<<<<<< HEAD
     if (keyCode == 65) {
         controller.staaahp();
     }
-=======
->>>>>>> Produktiv
     //console.log(keyCode);
 }
 
