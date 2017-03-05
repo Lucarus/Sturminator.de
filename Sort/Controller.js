@@ -4,77 +4,127 @@ function Controller() {
     this.normForm = {W: 400, H: 30, R: 10};
 
     // Listen für die Elemente die sortiert werden
+    this.newListAnimationCooldown = 0;
+    this.listenMenge = 0;
     this.bubblesortElements = [];
     this.selectionsortElements = [];
-    this.insertionsortElements = [];
-    this.noClickList = [];
+    this.swapsortElements = [];
 
     // Sorthighlight der den Hintergrund für die Elemente die sortiert werden darstellt
-    this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 10, "", "rgba(0,255,0, 0.75)");
-    this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,0,255, 0.75)");
-    this.selectionsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,255,0, 0.75)");
-    this.selectionsort_HighlightS = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(255,0,0, 0.75)");
+    this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 10, "", "rgba(78,227,130, 1)");
+    this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
+    this.selectionsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
+    this.selectionsort_HighlightS = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(245,225,75, 1)");
+    this.swapsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
+    this.swapsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
+    this.swapsort_HighlightS = [];
     this.liftedItemIndex = -1;
+
 
     // Sorts starten
     this.bubbleSort = function() { this.isBubblesorting = true; }
-    this.insertionSort = function() { this.isInsertionsorting = true; }
     this.selectionSort = function() { this.isSelectionsorting = true; }
-    this.staaahp = function() { this.isSelectionsorting = this.isInsertionsorting = this.isBubblesorting = false; }
+    this.swapSort = function() { this.isSwapsorting = true; }
+    this.staaahp = function() { this.isSwapsorting = this.isSelectionsorting = this.isBubblesorting = false; this.resetHighlights(); this.resetSorts(); }
+    this.pause = function() {  this.isSwapsorting = this.isSelectionsorting = this.isBubblesorting = false; }
 
-    this.init = function() {
-        // beser mit den ids der buttons verknüpfen
-        this.noClickList.push(new NoclickRegion({ X: 0, Y: 0 },  { W: 100, H: 25 }));
-        this.noClickList.push(new NoclickRegion({ X: 100, Y: 0 },  { W: 100, H: 25 }));
-        this.noClickList.push(new NoclickRegion({ X: 200, Y: 0 },  { W: 100, H: 25 }));
-        this.noClickList.push(new NoclickRegion({ X: 300, Y: 0 },  { W: 100, H: 25 }));
-        this.noClickList.push(new NoclickRegion({ X: 400, Y: 0 },  { W: 100, H: 25 }));
-        console.log(this.noClickList);
+    this.resetHighlights = function() {
+        this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 10, "", "rgba(78,227,130, 1)");
+        this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(31,150,197, 1)");
+        this.selectionsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
+        this.selectionsort_HighlightS = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(245,225,75, 1)"); // rgba(255,110,87, 1)
+        this.swapsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(31,150,197, 1)");
+        this.swapsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
+        this.swapsort_HighlightS = [];
     }
 
-    // Sortieritem auswählen
-    // DEBUG: Neues Sortieritem erstellen
-    this.click = function(mouseX, mouseY) {
-        // Überprüfen ob Button geklickt werden
-        for (var i = 0; i < this.noClickList.length; i++) {
-            if (this.noClickList[i].gotClicked(mouseX, mouseY)) {
-                return;
-            }
+    this.init = function() {
+        this.newLists(12);
+
+        textSize(32);
+        text("Bubblesort", 15, 10);
+        text("Selectionsort", 15, 510);
+        text("Swapsort", 15, 1010);
+    }
+
+    this.newLists = function(menge) {
+        // zuerst alles stoppen
+        this.staaahp();
+
+        document.getElementById("successBubble").style.visibility = "hidden";
+        document.getElementById("successSelection").style.visibility = "hidden";
+        document.getElementById("successSwap").style.visibility = "hidden";
+
+        for (var i = 0; i < this.bubblesortElements.length; i++) {
+            this.displace(this.bubblesortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
+            this.displace(this.selectionsortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
+            this.displace(this.swapsortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
         }
 
-        // Jedes Element durchlaufen
-        for (var i = 0; i < this.bubblesortElements.length; i++) {
-            // Kollision abfragen
-            if (areColliding(mouseX, mouseY, 1, 1, this.bubblesortElements[i].location.X, this.bubblesortElements[i].location.Y, this.bubblesortElements[i].form.W, this.bubblesortElements[i].form.H))
-                return;
+        this.listenMenge = menge;
+        this.newListAnimationCooldown = Math.round(this.SWITCH_TIME * GAME_FPS);
+    }
+
+    this.updateRoutineNewList = function() {
+        if (this.newListAnimationCooldown <= 0 && this.newListAnimationCooldown > - 999) {
+            this.bubblesortElements = [];
+            this.selectionsortElements = [];
+            this.swapsortElements = [];
+            for (var i = 0; i < this.listenMenge; i++) {
+                var value = random(1, 20);
+                this.bubblesortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
+                this.swapsortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
+                this.selectionsortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
+                this.listenAnordnen();
+            } 
+            this.newListAnimationCooldown = -999;
+        } else {
+            this.newListAnimationCooldown--;
         }
-        // Wenn kein Element geklickt wurde ein neues erstellen
-        var value = random(1, 20);
-        this.bubblesortElements.push(new Sortitem(mouseX - 10 * 15, mouseY - this.normForm.H * 0.5, "value", this.normForm.H, this.normForm.R, value));
-        this.insertionsortElements.push(new Sortitem(mouseX - 10 * 15, mouseY - this.normForm.H * 0.5, "value", this.normForm.H, this.normForm.R, value));
-        this.selectionsortElements.push(new Sortitem(mouseX - 10 * 15, mouseY - this.normForm.H * 0.5, "value", this.normForm.H, this.normForm.R, value));
     }
 
     this.sortStepp = function() { this.doNextStepp = true; };
     this.runThrough = function() { this.isSteppMode=false; };
     this.toggleSteppMode = function() { return(this.isSteppMode = !this.isSteppMode) };
 
+    this.resetSorts = function() {
+        //Variablen für Sortanimation
+        this.isSteppMode = false;
+        this.doNextStepp = false;
+        this.SWITCH_TIME =  0.15; // in Sekunden
+        this.SORT_DELAY = 0.10; // in Sekunden
+        //Bubblesort
+        this.isBubblesorting = false;
+        this.bubbleSort_i = 1;  // 1 ist wichtig
+        this.bubbleSort_x = 0;
+        this.bubbleSort_nextSteppIn = 0;
+        //Selectionsort
+        this.isSelectionsorting = false;
+        this.selectionSort_i = 0;
+        this.selectionSort_x = 0;
+        this.selectionSort_nextSteppIn = 0;
+        this.selectionSort_smallestIndex = 0;
+        this.selectionSort_smalest = 999999;
+        //Inserstionsort
+        this.isSwapsorting = false;
+        this.swapSort_i = 0;
+        this.swapSort_smallerMenge = 0;
+        this.swapSort_nextSteppIn = 0;
+        this.swapSort_countingSmallest = false;
+        this.swapSort_x = 0;
+        this.swapSort_found = false;
+    }
+
     //Variablen für Sortanimation
     this.isSteppMode = false;
     this.doNextStepp = false;
-    this.SWITCH_TIME =  0.3; // in Sekunden
-    this.SORT_DELAY = 0.15; // in Sekunden 
-    //this.NOSORT_TIME = 0.25; // in Sekunden
+    this.SWITCH_TIME =  0.1; // in Sekunden
+    this.SORT_DELAY = 0.1; // in Sekunden
     //Bubblesort
     this.isBubblesorting = false;
     this.bubbleSort_i = 1;  // 1 ist wichtig
     this.bubbleSort_x = 0;
     this.bubbleSort_nextSteppIn = 0;
-    //Inserstionsort
-    this.isInsertionsorting = false;
-    this.insertionSort_i = 0;
-    this.insertionSort_x = 0;
-    this.insertionSort_nextSteppIn = 0;
     //Selectionsort
     this.isSelectionsorting = false;
     this.selectionSort_i = 0;
@@ -82,7 +132,14 @@ function Controller() {
     this.selectionSort_nextSteppIn = 0;
     this.selectionSort_smallestIndex = 0;
     this.selectionSort_smalest = 999999;
-
+    //Inserstionsort
+    this.isSwapsorting = false;
+    this.swapSort_i = 0;
+    this.swapSort_smallerMenge = 0;
+    this.swapSort_nextSteppIn = 0;
+    this.swapSort_countingSmallest = false;
+    this.swapSort_x = 0;
+    this.swapSort_found = false;
 
     // Alle Sortieritems updaten lassen
     this.update = function() {
@@ -141,6 +198,8 @@ function Controller() {
                         this.bubbleSort_x = 0;
                         this.bubbleSort_nextSteppIn = 0;
 
+                        document.getElementById("successBubble").style.visibility = "visible";
+
                         this.bubblesort_Highlight.location = {X: -1000, Y: -1000};
                     }
                 } else {
@@ -164,11 +223,11 @@ function Controller() {
                     // Äußere schleife
                     if (this.selectionSort_x < this.selectionsortElements.length) {
                         // Highlight für äußere schleife
-                        this.selectionsort_HighlightX.location = {X:this.selectionsortElements[this.selectionSort_x].location.X - 5 , Y: this.selectionsortElements[this.selectionSort_x].location.Y - 5 };
+                        this.selectionsort_HighlightI.location = {X:this.selectionsortElements[this.selectionSort_x].location.X - 5 , Y: this.selectionsortElements[this.selectionSort_x].location.Y - 5 };
                         // innere schleife
                         if (this.selectionSort_i < this.selectionsortElements.length) {
                             // Highligt für Compare objekt
-                            this.selectionsort_HighlightI.location = {X:this.selectionsortElements[this.selectionSort_i].location.X - 5 , Y: this.selectionsortElements[this.selectionSort_i].location.Y - 5 };
+                            this.selectionsort_HighlightX.location = {X:this.selectionsortElements[this.selectionSort_i].location.X - 5 , Y: this.selectionsortElements[this.selectionSort_i].location.Y - 5 };
                             // kurze Zeit warten auch wenn kein Element gefunde wurde
                             this.selectionSort_nextSteppIn = Math.round(GAME_FPS * this.SORT_DELAY);
 
@@ -209,6 +268,8 @@ function Controller() {
                         this.selectionsort_HighlightI.location = {X: -1000, Y: -1000};
                         this.selectionsort_HighlightX.location = {X: -1000, Y: -1000};
                         this.selectionsort_HighlightS.location = {X: -1000, Y: -1000};
+
+                        document.getElementById("successSelection").style.visibility = "visible";
                     }
                 } else {
                     this.selectionSort_nextSteppIn--;
@@ -216,21 +277,74 @@ function Controller() {
             }
         }
         
-        // Inserstionsort Sortanimation
+        // Inserstionsort Sortanimation IST SCHEI?E
         /*
             Um mit den Animationen leichter arbeiten zu können wird die Sortfunktion in die Updateschleife ausgelagert.
             Das heißt es wird ~ jede Sekunde ein schritt in dem Algorithmus durchlaufen.
         */
-        if (this.isInsertionsorting) {
+
+        // SWAP-Sort
+
+        if (this.isSwapsorting) {
             // für den Stepp mode
-            if (this.isSteppMode && this.doNextStepp) this.insertionSort_nextSteppIn = 0;
+            if (this.isSteppMode && this.doNextStepp) this.swapSort_nextSteppIn = 0;
             // nur Ausführen wenn im Stepp
             if (this.doNextStepp) {
-            // Mainschleife nur ausführen, wenn wir gerade NICHT in einer Animationsphase sind
-                if (this.insertionSort_nextSteppIn <= 0) {
-                    // SORTING
+                if (this.swapSort_nextSteppIn <= 0) {
+                    if (this.swapSort_i < this.swapsortElements.length - 1) {
+                        // Highlight
+                        this.swapsort_HighlightI.location = {X: this.swapsortElements[this.swapSort_i].location.X - 5, Y: this.swapsortElements[this.swapSort_i].location.Y - 5};
+                        // Standard Delay
+                        this.swapSort_nextSteppIn = Math.round(this.SORT_DELAY * GAME_FPS);
+
+                        if (!this.swapSort_countingSmallest) {
+                            // start counting
+                            this.swapSort_countingSmallest = true;
+
+                            this.swapSort_smallerMenge = 0;
+                            // Highlight löschen
+                            this.swapsort_HighlightS = [];
+                            this.swapSort_x =  this.swapSort_i + 1;
+                        }
+
+                        this.swapsort_HighlightX.location = {X: -1000, Y: -1000};
+                        if (this.swapSort_x < this.swapsortElements.length) {
+                            this.swapsort_HighlightX.location = { X:this.swapsortElements[this.swapSort_x].location.X - 5, Y: this.swapsortElements[this.swapSort_x].location.Y - 5}              
+                            if (this.swapsortElements[this.swapSort_i].value > this.swapsortElements[this.swapSort_x].value) {
+                                // für jedes gezählte Element Highlicht hinzufügen
+                                this.swapsort_HighlightS.push(new Sortitem(this.swapsortElements[this.swapSort_x].location.X - 5, this.swapsortElements[this.swapSort_x].location.Y - 5, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(245,225,75, 1)"));
+                                this.swapSort_smallerMenge++;
+                            }
+                            this.swapSort_x++;
+                        } else {
+                            this.swapSort_countingSmallest = false;
+                        }
+
+                        if (!this.swapSort_countingSmallest) {
+                            if (this.swapSort_smallerMenge > 0) {
+                                // 3ertausch
+                                // Elemente tauschen, nachdem die inntereschleife einmal durchlaufen wurde
+                                temp = this.swapsortElements[this.swapSort_i];
+                                this.swapsortElements[this.swapSort_i] = this.swapsortElements[this.swapSort_i + this.swapSort_smallerMenge];
+                                this.swapsortElements[this.swapSort_i + this.swapSort_smallerMenge] = temp;
+                                // Animationsmanager mit der Bewegungsanimation beauftragen
+                                this.displace(this.swapsortElements[this.swapSort_i + this.swapSort_smallerMenge], {X: this.swapsortElements[this.swapSort_i].location.X, Y: this.swapsortElements[this.swapSort_i].location.Y}, this.SWITCH_TIME);
+                                this.displace(this.swapsortElements[this.swapSort_i], {X:this.swapsortElements[this.swapSort_i + this.swapSort_smallerMenge].location.X, Y:this.swapsortElements[this.swapSort_i + this.swapSort_smallerMenge].location.Y}, this.SWITCH_TIME);    
+                                this.swapSort_nextSteppIn = Math.round(this.SWITCH_TIME * GAME_FPS);
+                            } else {
+                                this.swapSort_i++;
+                            }
+                        }
+                    } else {
+                        // Reset
+                        this.swapSort_i = 0;
+                        this.isSwapsorting = false;
+                        this.swapsort_HighlightI.location = {X: -1000, Y: -1000};
+
+                        document.getElementById("successSwap").style.visibility = "visible";
+                    }
                 } else {
-                    this.insertionSort_nextSteppIn--;
+                    this.swapSort_nextSteppIn--;
                 }
             }
         }
@@ -240,15 +354,23 @@ function Controller() {
 
         // Animationen updaten
         this.animationUpdate();
-        
+
+        // diferse Updatesachen
+        this.updateRoutineNewList();
+
         // ! Achtung !
         // Die Reihenfolge ist hier entscheident
         // Sortelement Highlight zeichenen
         this.bubblesort_Highlight.draw();
-        this.selectionsort_HighlightS.draw();
         this.selectionsort_HighlightI.draw();
+        this.selectionsort_HighlightS.draw();
         this.selectionsort_HighlightX.draw();
-        
+        this.swapsort_HighlightS.forEach(function(sorthighlight) {
+            sorthighlight.draw();
+        });
+        this.swapsort_HighlightI.draw();
+        this.swapsort_HighlightX.draw();
+
         // alle Elemente zeichnen
         this.bubblesortElements.forEach(function(sortitem) {
             sortitem.draw();
@@ -256,15 +378,20 @@ function Controller() {
         this.selectionsortElements.forEach(function(sortitem){
             sortitem.draw();
         });
-        this.insertionsortElements.forEach(function(sortitem) {
-            //sortitem.draw();
+        this.swapsortElements.forEach(function(sortitem) {
+            sortitem.draw();
         });
+
+        // Update text        
+        text("Bubblesort", 10, 37);
+        text("Selectionsort", 510, 37);
+        text("Swapsort", 1010, 37);
     }
 
-    this.debug = function() {
+    this.listenAnordnen = function() {
         this.placeInOrder(this.bubblesortElements, 10);
         this.placeInOrder(this.selectionsortElements, 510);
-        //this.placeInOrder(this.insertionsortElements, 1010);
+        this.placeInOrder(this.swapsortElements, 1010);
     }
 
     this.placeInOrder = function(sortedList, X) {
@@ -331,9 +458,6 @@ function Controller() {
         this.animationsToStop = [];    
     }
 
-    function doSelectionsort() {
-
-    }
 
     function hypothenuse(a, b) {
         return Math.sqrt(Math.pow(Math.abs(a), 2) + Math.pow(Math.abs(b), 2))

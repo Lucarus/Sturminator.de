@@ -1,53 +1,50 @@
 <html>
 <head>
   <meta charset="UTF-8">
-
-  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
   <script language="javascript" type="text/javascript" src="../libraries/p5.js"></script>
-  <script language="javascript" type="text/javascript" src="NoclickRegion.js"></script>
-  <!--script language="javascript" type="text/javascript" src="ControllManager.js"></script-->
-  <!--script language="javascript" type="text/javascript" src="Animator.js"></script-->
   <script language="javascript" type="text/javascript" src="Sortitem.js"></script>
   <script language="javascript" type="text/javascript" src="Controller.js"></script>  
   <script language="javascript" type="text/javascript" src="Sort.js"></script>
-  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
-
-  <!-- this line removes any default padding and style. you might only need one of these values set. -->
+ 
   <style> 
     body {padding: 0; margin: 0;} 
-    button {position: absolute;top: 0;left: 0;}
-    #startSort {
-      width: 100px;
-      height: 25px;
-    }
+    img {position: absolute;bottom: 10;left: 10;}
+
     #steppMode {
-      left: 100px;
-      width: 100px;
-      height: 25px;
+      left: 120px;
     }
     #forwardStepp {
-      left: 200px;
-      width: 100px;
-      height: 25px;
-    }
-    #runSort {
-      left: 300px;
-      width: 100px;
-      height: 25px;
+      left: 230px;
     }
     #runShuffle {
-      left: 400px;
-      width: 100px;
-      height: 25px;
+      left: 340px;
+    }
+    #successBubble {
+      bottom: 145px;
+      left: 120px;
+      visibility: hidden;
+    }
+    #successSelection {
+      bottom: 145px;
+      left: 620px;
+      visibility: hidden; 
+    }
+    #successSwap {
+      bottom: 145px;
+      left: 1120px;      
+      visibility: hidden;
     }
   </style>
 </head>
 
 <body>
-  <button id="startSort">Start</button>
-  <button id="steppMode">Schrittmodus - AUS </button>
-  <button id="forwardStepp">Nächster Schritt</button>
-  <button id="runSort">Durchlaufen</button>
-  <button id="runShuffle">Mischen</button>
+  <img id="startSort" src="img/play.png" width="100" height="100">
+  <img id="steppMode" src="img/steppmode.png" width="100" height="100">
+  <img id="forwardStepp" src="img/stepp.png" width="100" height="100" onmouseover="this.src='img/stepp_on.png'" onmouseout="this.src='img/stepp.png'">
+  <img id="runShuffle" src="img/shuffle.png" width="100" height="100" onmouseover="this.src='img/shuffle_on.png'" onmouseout="this.src='img/shuffle.png'">
+
+  <img id="successBubble" src="img/success.png" width="100" height="100">
+  <img id="successSelection" src="img/success.png" width="100" height="100">
+  <img id="successSwap" src="img/success.png" width="100" height="100">
 </body>
 </html>

@@ -2,7 +2,12 @@
 let GAME_FPS = 60;
 var controller = new Controller();
 
+var displayPlay = false;
+var displayStepp = false;
+
+
 function setup() {
+
     createCanvas(1500, 800);
     frameRate(GAME_FPS);
     noStroke();
@@ -10,11 +15,65 @@ function setup() {
     controller.init();
 
     // Klick handler hinzufügen
-    document.getElementById("startSort").onclick = function() { controller.bubbleSort(); controller.selectionSort(); controller.insertionSort(); };
-    document.getElementById("steppMode").onclick = function() { controller.toggleSteppMode(); };
-    document.getElementById("forwardStepp").onclick = function() { controller.sortStepp(); };
-    document.getElementById("runSort").onclick = function() { controller.runThrough(); };
-    document.getElementById("runShuffle").onclick = function() { controller.shuffle(); };
+    document.getElementById("startSort").onclick = function(e) {
+        if (displayPlay) e.target.src = "img/play.png";
+        if (!displayPlay) e.target.src = "img/stop_on.png";
+        
+        if (displayPlay) {
+            controller.pause();
+        } else {
+            controller.swapSort(); 
+            controller.bubbleSort(); 
+            controller.selectionSort();  
+        }
+
+        displayPlay = !displayPlay;  
+    };
+    document.getElementById("startSort").onmouseover = function(e) {
+        if (displayPlay) e.target.src = "img/stop.png";
+        if (!displayPlay) e.target.src = "img/play.png";
+    };
+    document.getElementById("startSort").onmouseleave = function(e) {
+        if (displayPlay) e.target.src = "img/play.png";
+        if (!displayPlay) e.target.src = "img/stop_on.png";    
+    };
+
+    document.getElementById("steppMode").onclick = function(e) {
+        if (!displayStepp) { 
+            e.target.src = "img/steppmode_on.png";
+        }
+        if (displayStepp) {
+            e.target.src = "img/steppmode.png"; 
+        }
+
+        displayPlay = !controller.toggleSteppMode()
+
+        // Das aus der Startsort Klick auch hier übernehmen
+        if (displayPlay) document.getElementById("startSort").src = "img/play.png";
+        if (!displayPlay) document.getElementById("startSort").src = "img/stop_on.png";
+        
+        if (displayPlay) {
+            controller.pause();
+        } else {
+            controller.swapSort(); 
+            controller.bubbleSort(); 
+            controller.selectionSort();  
+        }
+
+        displayPlay = !displayPlay;  
+        displayStepp = !displayStepp;
+    };
+    document.getElementById("forwardStepp").onclick = function(e) {
+        controller.sortStepp(); 
+    };
+    document.getElementById("runShuffle").onclick = function(e) {
+        document.getElementById("startSort").src = "img/play.png";
+        document.getElementById("steppMode").src = "img/steppmode.png";
+
+        displayPlay = false;
+        displayStepp = false;
+        controller.newLists(12); 
+    };
 }
 
 function draw() {
@@ -25,8 +84,8 @@ function draw() {
 
 function mouseClicked() {
     // mouseX, mouseY,
-    controller.click(mouseX, mouseY);
-    return false;
+    //controller.click(mouseX, mouseY);
+    //return false;
 }
 
 function keyPressed() {

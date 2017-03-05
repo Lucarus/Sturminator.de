@@ -9,7 +9,7 @@ function Sortitem(X, Y, width, height, radius, value, color) {
     } else {
         this.form = {H: height, W: width, R: radius};
     }
-    this.color = color || "#222222";
+    this.color = color || "#333333"; // #222222
     this.isUp = false;
 
     // Zeichnen
