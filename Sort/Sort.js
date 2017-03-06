@@ -8,7 +8,7 @@ var displayStepp = false;
 
 function setup() {
 
-    createCanvas(1500, 800);
+    createCanvas(1600, 800);
     frameRate(GAME_FPS);
     noStroke();
 
@@ -30,21 +30,17 @@ function setup() {
         displayPlay = !displayPlay;  
     };
     document.getElementById("startSort").onmouseover = function(e) {
-        if (displayPlay) e.target.src = "img/stop.png";
-        if (!displayPlay) e.target.src = "img/play.png";
+        if (displayPlay) e.target.src = "img/play.png";
+        if (!displayPlay) e.target.src = "img/stop_on.png";
     };
     document.getElementById("startSort").onmouseleave = function(e) {
-        if (displayPlay) e.target.src = "img/play.png";
-        if (!displayPlay) e.target.src = "img/stop_on.png";    
+        if (displayPlay) e.target.src = "img/stop_on.png";
+        if (!displayPlay) e.target.src = "img/play.png";    
     };
 
     document.getElementById("steppMode").onclick = function(e) {
-        if (!displayStepp) { 
-            e.target.src = "img/steppmode_on.png";
-        }
-        if (displayStepp) {
-            e.target.src = "img/steppmode.png"; 
-        }
+        if (!displayStepp) e.target.src = "img/steppmode_on.png";
+        if (displayStepp) e.target.src = "img/steppmode.png"; 
 
         displayPlay = !controller.toggleSteppMode()
 
@@ -63,6 +59,15 @@ function setup() {
         displayPlay = !displayPlay;  
         displayStepp = !displayStepp;
     };
+    document.getElementById("steppMode").onmouseover = function(e) { 
+        if (!displayStepp) e.target.src = "img/steppmode_on.png";
+        if (displayStepp) e.target.src = "img/steppmode.png"; 
+    }
+    document.getElementById("steppMode").onmouseleave = function(e) {
+        if (!displayStepp) e.target.src = "img/steppmode.png";
+        if (displayStepp) e.target.src = "img/steppmode_on.png";
+    }
+
     document.getElementById("forwardStepp").onclick = function(e) {
         controller.sortStepp(); 
     };
@@ -72,7 +77,7 @@ function setup() {
 
         displayPlay = false;
         displayStepp = false;
-        controller.newLists(12); 
+        controller.newLists(14); 
     };
 }
 
@@ -86,21 +91,21 @@ function mouseClicked() {
     // mouseX, mouseY,
     //controller.click(mouseX, mouseY);
     //return false;
+    controller.idleMode = false;
 }
 
 function keyPressed() {
     if (keyCode == 13) {
-        controller.debug();
+        controller.idleMode = !controller.idleMode;
     }
     if (keyCode == 80) {
-        controller.bubbleSort();
-        controller.selectionSort();
+        
     }
     if (keyCode == 68) {
-        controller.sortStepp();
+        controller.faster();
     }
     if (keyCode == 65) {
-        controller.staaahp();
+        controller.slower();
     }
     //console.log(keyCode);
 }

@@ -5,7 +5,7 @@ function Sortitem(X, Y, width, height, radius, value, color) {
     this.value = value;
     this.location = {X: X, Y: Y};
     if (width === "value") {
-        this.form = {H: height, W: Math.round(value * 15), R: radius};
+        this.form = {H: height, W: Math.round(value * 5), R: radius};
     } else {
         this.form = {H: height, W: width, R: radius};
     }

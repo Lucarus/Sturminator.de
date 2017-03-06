@@ -11,7 +11,8 @@ function Controller() {
     this.swapsortElements = [];
 
     // Sorthighlight der den Hintergrund für die Elemente die sortiert werden darstellt
-    this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 10, "", "rgba(78,227,130, 1)");
+    this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
+    this.bubblesort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
     this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
     this.selectionsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
     this.selectionsort_HighlightS = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(245,225,75, 1)");
@@ -19,7 +20,6 @@ function Controller() {
     this.swapsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
     this.swapsort_HighlightS = [];
     this.liftedItemIndex = -1;
-
 
     // Sorts starten
     this.bubbleSort = function() { this.isBubblesorting = true; }
@@ -29,19 +29,20 @@ function Controller() {
     this.pause = function() {  this.isSwapsorting = this.isSelectionsorting = this.isBubblesorting = false; }
 
     this.resetHighlights = function() {
-        this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H * 2 + 20, 10, "", "rgba(78,227,130, 1)");
-        this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(31,150,197, 1)");
+        this.bubblesort_Highlight = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H  + 10, 10, "", "rgba(78,227,130, 1)");
+        this.bubblesort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
+        this.selectionsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)");
         this.selectionsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
         this.selectionsort_HighlightS = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(245,225,75, 1)"); // rgba(255,110,87, 1)
-        this.swapsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(31,150,197, 1)");
+        this.swapsort_HighlightX = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(0,93,168, 1)"); // rgba(31,150,197, 1)
         this.swapsort_HighlightI = new Sortitem(-1000,-1000, this.normForm.W + 10, this.normForm.H + 10, 10, "", "rgba(78,227,130, 1)");
         this.swapsort_HighlightS = [];
     }
 
     this.init = function() {
-        this.newLists(12);
+        //this.newLists(14);
 
-        textSize(32);
+        textSize(40);
         text("Bubblesort", 15, 10);
         text("Selectionsort", 15, 510);
         text("Swapsort", 15, 1010);
@@ -51,14 +52,15 @@ function Controller() {
         // zuerst alles stoppen
         this.staaahp();
 
-        document.getElementById("successBubble").style.visibility = "hidden";
-        document.getElementById("successSelection").style.visibility = "hidden";
-        document.getElementById("successSwap").style.visibility = "hidden";
+        document.getElementById("successBubble").style.visibility = document.getElementById("successSelection").style.visibility = document.getElementById("successSwap").style.visibility = "hidden";
+        document.getElementById("successBubble").style.width = document.getElementById("successSwap").style.width = document.getElementById("successSelection").style.width = "50px";
+        document.getElementById("successBubble").style.height = document.getElementById("successSelection").style.height = document.getElementById("successSwap").style.height = "50px";
 
         for (var i = 0; i < this.bubblesortElements.length; i++) {
-            this.displace(this.bubblesortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
-            this.displace(this.selectionsortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
-            this.displace(this.swapsortElements[i], {X: 950, Y: 1200}, this.SWITCH_TIME);
+            this.displace(this.bubblesortElements[i], {X: 1700, Y: 450}, this.SWITCH_TIME);
+            this.displace(this.selectionsortElements[i], {X: 1700, Y: 450}, this.SWITCH_TIME);
+            this.displace(this.swapsortElements[i], {X: 1700, Y: 450}, this.SWITCH_TIME);
+            this.listenAnordnen();
         }
 
         this.listenMenge = menge;
@@ -71,10 +73,10 @@ function Controller() {
             this.selectionsortElements = [];
             this.swapsortElements = [];
             for (var i = 0; i < this.listenMenge; i++) {
-                var value = random(1, 20);
-                this.bubblesortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
-                this.swapsortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
-                this.selectionsortElements.push(new Sortitem(950, 1200, "value", this.normForm.H, this.normForm.R, value));
+                var value = random(5, 60);
+                this.bubblesortElements.push(new Sortitem(-1000, 450, "value", this.normForm.H, this.normForm.R, value));
+                this.swapsortElements.push(new Sortitem(-1000, 450, "value", this.normForm.H, this.normForm.R, value));
+                this.selectionsortElements.push(new Sortitem(-1000, 450, "value", this.normForm.H, this.normForm.R, value));
                 this.listenAnordnen();
             } 
             this.newListAnimationCooldown = -999;
@@ -86,13 +88,21 @@ function Controller() {
     this.sortStepp = function() { this.doNextStepp = true; };
     this.runThrough = function() { this.isSteppMode=false; };
     this.toggleSteppMode = function() { return(this.isSteppMode = !this.isSteppMode) };
+    this.faster = function() {
+        this.SWITCH_TIME -=  0.15; // in Sekunden
+        this.SORT_DELAY -= 0.10; // in Sekunden
+    }
+    this.slower = function() {
+        this.SWITCH_TIME +=  0.15; // in Sekunden
+        this.SORT_DELAY += 0.10; // in Sekunden
+    }
 
     this.resetSorts = function() {
         //Variablen für Sortanimation
         this.isSteppMode = false;
         this.doNextStepp = false;
-        this.SWITCH_TIME =  0.15; // in Sekunden
-        this.SORT_DELAY = 0.10; // in Sekunden
+        this.SWITCH_TIME =  0.31; // in Sekunden
+        this.SORT_DELAY = 0.21; // in Sekunden
         //Bubblesort
         this.isBubblesorting = false;
         this.bubbleSort_i = 1;  // 1 ist wichtig
@@ -141,8 +151,36 @@ function Controller() {
     this.swapSort_x = 0;
     this.swapSort_found = false;
 
+    this.idleSortWait = 90;
+    this.idleMode = false;
+    this.idleWaitTicks = 120;
+
     // Alle Sortieritems updaten lassen
     this.update = function() {
+
+
+        // IDLE mode
+        if (this.idleMode) {
+            if (!this.isBubblesorting && !this.isSelectionsorting && !this.isSwapsorting) {
+                if (this.idleWaitTicks <= 0) {
+                    if (this.idleSortWait == 90) controller.newLists(14);
+                
+                    if (this.idleSortWait <= 0) {
+                        document.getElementById("startSort").src = "img/play.png";
+                        displayPlay = false;
+                        this.bubbleSort();
+                        this.swapSort();
+                        this.selectionSort();
+                        this.idleWaitTicks = 120;
+                        this.idleSortWait = 90; 
+                    } else {
+                        this.idleSortWait--;
+                    }
+                } else {
+                    this.idleWaitTicks--;
+                }
+            }
+        }
 
         // Wenn nicht im Steppmode, dann ist jeder Frame ein Stepp
         if (!this.isSteppMode) this.doNextStepp = true;
@@ -168,6 +206,10 @@ function Controller() {
                                 X: this.bubblesortElements[this.bubbleSort_i - 1].location.X - 5,
                                 Y: this.bubblesortElements[this.bubbleSort_i - 1].location.Y - 5
                             };
+                            this.bubblesort_HighlightI.location = {
+                                X: this.bubblesortElements[this.bubbleSort_i].location.X - 5,
+                                Y: this.bubblesortElements[this.bubbleSort_i].location.Y - 5
+                            }
                             // kurze Zeit warten auch wenn kein Element gefunde wurde
                             this.bubbleSort_nextSteppIn = Math.round(GAME_FPS * this.SORT_DELAY);
 
@@ -199,8 +241,12 @@ function Controller() {
                         this.bubbleSort_nextSteppIn = 0;
 
                         document.getElementById("successBubble").style.visibility = "visible";
+                        document.getElementById("successBubble").style.height = "75px";
+                        document.getElementById("successBubble").style.width = "75px";
+                        
 
                         this.bubblesort_Highlight.location = {X: -1000, Y: -1000};
+                        this.bubblesort_HighlightI.location = {X: -1000, Y: -1000};
                     }
                 } else {
                     this.bubbleSort_nextSteppIn--;
@@ -236,7 +282,7 @@ function Controller() {
                                 this.selectionsort_HighlightS.location = {X:this.selectionsortElements[this.selectionSort_i].location.X - 5 , Y: this.selectionsortElements[this.selectionSort_i].location.Y - 5 };
                                 this.selectionSort_smalest = this.selectionsortElements[this.selectionSort_i].value;
                                 this.selectionSort_smallestIndex = this.selectionSort_i;
-                            } 
+                            }
                             
                             this.selectionSort_i++;
                             
@@ -270,6 +316,8 @@ function Controller() {
                         this.selectionsort_HighlightS.location = {X: -1000, Y: -1000};
 
                         document.getElementById("successSelection").style.visibility = "visible";
+                        document.getElementById("successSelection").style.width = "75px";
+                        document.getElementById("successSelection").style.height = "75px";
                     }
                 } else {
                     this.selectionSort_nextSteppIn--;
@@ -342,6 +390,8 @@ function Controller() {
                         this.swapsort_HighlightI.location = {X: -1000, Y: -1000};
 
                         document.getElementById("successSwap").style.visibility = "visible";
+                        document.getElementById("successSwap").style.height = "75px";
+                        document.getElementById("successSwap").style.width = "75px";
                     }
                 } else {
                     this.swapSort_nextSteppIn--;
@@ -362,6 +412,7 @@ function Controller() {
         // Die Reihenfolge ist hier entscheident
         // Sortelement Highlight zeichenen
         this.bubblesort_Highlight.draw();
+        this.bubblesort_HighlightI.draw();
         this.selectionsort_HighlightI.draw();
         this.selectionsort_HighlightS.draw();
         this.selectionsort_HighlightX.draw();
@@ -382,20 +433,24 @@ function Controller() {
             sortitem.draw();
         });
 
-        // Update text        
-        text("Bubblesort", 10, 37);
-        text("Selectionsort", 510, 37);
-        text("Swapsort", 1010, 37);
+        // Update text
+        fill(0, 93, 168);
+        textSize(28);
+        text("Bubblesort", 20, 105);
+        text("Selectionsort", 520, 105);
+        text("Swapsort", 1020, 105);
+        textSize(42);
+        text("Sortieralgorithmen", 600, 52);
     }
 
     this.listenAnordnen = function() {
-        this.placeInOrder(this.bubblesortElements, 10);
-        this.placeInOrder(this.selectionsortElements, 510);
-        this.placeInOrder(this.swapsortElements, 1010);
+        this.placeInOrder(this.bubblesortElements, 20);
+        this.placeInOrder(this.selectionsortElements, 520);
+        this.placeInOrder(this.swapsortElements, 1020);
     }
 
     this.placeInOrder = function(sortedList, X) {
-        var compHeight = 10;
+        var compHeight = 75;
         for (var i = 0; i < sortedList.length; i++) {
             this.displace(sortedList[i], {
                 X: X,
