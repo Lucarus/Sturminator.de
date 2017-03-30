@@ -10,7 +10,7 @@ body {
     padding: 0;
 
     background-color: #e5ffec;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .project-container {
@@ -77,8 +77,8 @@ body {
         margin-top: 25px; 
         margin-bottom: 25px;
 
-        overflow: auto;
-        overflow-x: hidden; 
+        /*overflow: auto;
+        overflow-x: hidden;*/ 
     }
 
     .headline h1 {
