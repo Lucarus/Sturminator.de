@@ -1,0 +1,9 @@
+.choosen .indicator .none {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url(../Images/Controls/yes.png) no-repeat;
+  width: 75px; /* Width of new image */
+  height: 75px; /* Height of new image */
+  padding-left: 75px; /* Equal to width of new image */
+}
