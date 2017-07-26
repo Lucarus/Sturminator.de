@@ -9,7 +9,11 @@
 
     <title>Sturminator</title>
     <!--link rel="shortcut icon" href="favicon.ico"-->
-    <link rel="stylesheet" href="libraries/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!--<link rel="stylesheet" href="libraries/bootstrap-3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="siteStyle.css">
 </head>
 
@@ -18,11 +22,58 @@
         <h1>"Sachen machen Sachen"</h1><br />
     </div>
 
+
+<!--
+        <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="bilder/Ballnetz.png" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card" >
+                <img class="card-img-top" src="bilder/Ballnetz.png" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>  
+        </div>
+
+        <div class="col-md-4">
+            <div class="card" >
+                <img class="card-img-top" src="bilder/Ballnetz.png" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>  
+        </div>
+        <div class="col-md-4">
+            <div class="card" >
+                <img class="card-img-top" src="bilder/Ballnetz.png" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>  
+        </div>
+    </div>
+-->
     <div class="project-container row">
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-12">
             <a target="_blank" href="/Ballnetz/index.html">
-            <div class="project">
-                <img src="bilder/Ballnetz.png" class="img-responsive img-rounded" alt="Ballnetz" />
+            <div class="project text-center">
+                <img src="bilder/Ballnetz.png" class="img-responsive rounded" alt="Ballnetz" />
                 <h4>Ballnetz</h4>
                 <div class="text">
                     Mein erster richtiger Versucht etwas gescheites mit Javascript zu "erschaffen".
@@ -34,9 +85,9 @@
             </div>
             </a>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-12">
             <a target="_blank" href="/Bresenham/snake.html">
-            <div class="project">
+            <div class="project text-center">
                 <img src="bilder/Bresenham.png" class="img-responsive img-rounded" alt="Bresenham" />
                 <h4>Bresenham-Algorithmus</h4>
                 <div class="text">
@@ -47,9 +98,9 @@
             </div>
             </a>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-12">
             <a target="_blank" href="/Sort/sort.html">
-            <div class="project">
+            <div class="project text-center">
                 <img src="bilder/Sort.png" class="img-responsive img-rounded" alt="Sort" />
                 <h4>Grafische Darstellung von Sortieralgorithmen</h4>
                 <div class="text">
@@ -58,10 +109,10 @@
             </div>
             </a>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-12">
             <a target="_blank" href="/Diagramme/index.html">
-            <div class="project">
-                <img src="bilder/UML.png" class="img-responsive img-rounded" alt="Sort" />
+            <div class="project text-center">
+                <img src="bilder/UML.png" class="img-responsive img-rounded" alt="Diagramme" />
                 <h4>Meine UML-Diagramme</h4>
                 <div class="text">
                     Alles mögliche an UML Diagrammen die ich ertellt habe / werden
@@ -72,22 +123,19 @@
             </div>
             </a>
         </div>
-        <!--
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <a target="_blank" href="">
-            <div class="project">
-                <img src="" class="img-responsive img-rounded" alt="" />
-                <h4><span style="color: tomato">(WIP)</span></h4>
-                <div class="text"> 
+        <div class="col-md-6 col-sm-12">
+            <a target="_blank" href="http://www.vermietung.sturminator.de">
+            <div class="project text-center">
+                <img src="bilder/Vermietung.png" class="img-responsive img-rounded" alt="Vermietung" />
+                <h4>Sammelabos</h4>
+                <div class="text">
+                    Diese Seite dient nur dem Zweck, dass jeder weiß bis wann er mir schon das geld für seine Abos gegeben hat. Und es ist meine erste Seite die vue.js verwendet.
                 </div>
             </div>
             </a>
         </div>
-        -->
     </div>
-</body>
 
-<script src="libraries/jquery-3.1.0.min.js"></script>
-<script src="libraries/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+</body>
 
 </html>

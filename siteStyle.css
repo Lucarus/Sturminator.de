@@ -13,6 +13,10 @@ body {
     /*overflow: hidden;*/
 }
 
+.text {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .project-container {
     text-align: center;
 }
@@ -46,8 +50,10 @@ body {
     margin: 0 auto;
     margin-bottom: 20px;
 
-    -webkit-transition: height 0.5s ease-in-out, margin 0.5s ease-in-out;
-    transition: height 0.5s ease-in-out, margin 0.5s ease-in-out;
+    -webkit-transition: height 0.5s ease-out, margin 0.5s ease-out;
+    transition: height 0.5s ease-out, margin 0.5s ease-out;
+
+    border: 3px solid rgba(0, 0, 0, 0.1);
 }
 
 .project h4 {
