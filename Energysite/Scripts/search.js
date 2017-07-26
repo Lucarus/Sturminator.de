@@ -55,6 +55,7 @@ $(function() {
           } else {
             $($(this).children('img')[1]).attr("src", "Images/Controls/no.png");
           }
+          saveData();
         });
       });
     } else {

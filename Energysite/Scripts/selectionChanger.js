@@ -10,13 +10,14 @@ $(function() {
       } else {
         $($(this).children('img')[1]).attr("src", "Images/Controls/no.png");
       }
+      saveData();
     });
   });
 
   // alle 5 Sekunden speichern
-  setInterval(function() {
-    saveData();
-  }, 5000);
+  //setInterval(function() {
+  //  saveData();
+  //}, 5000);
 });
 
 $(window).on("unload", function() {
