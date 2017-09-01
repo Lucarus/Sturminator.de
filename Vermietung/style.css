@@ -1,0 +1,79 @@
+html {
+    background: rgb(235, 235, 235);
+    color: rgb(84, 101, 126);
+
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    padding-top: 0;
+    margin: 0;
+
+    font-size: 3em;
+    font-weight: normal;
+    display: inline-block;
+}
+
+h2 {
+    padding-top: 0;
+    margin: 0;
+    margin-left: 10px;
+
+    font-size: 4em;
+    font-style: italic;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    font-size: 2em;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+a:link {
+    color: rgb(84, 101, 126);
+}
+
+/* visited link */
+a:visited {
+    color: rgb(84, 101, 126);
+}
+
+/* mouse over link */
+a:hover {
+    color: rgb(84, 101, 126);
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: rgb(84, 101, 126);
+}
+
+
+.content {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 2em;
+}
+
+.center {
+    text-align: left;
+    display: block;
+    margin: auto;
+    width:  350px;
+}
+
+td {
+    padding-right: 20px;
+}
+
+.red {
+    color: tomato;
+}
+
+.red.green {
+    color: rgb(80, 217, 38);
+}

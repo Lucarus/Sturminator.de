@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>Lukas Vermietungen</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600i" rel="stylesheet">
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+    <div id="app">
+        <h1>Kosten</h1><h2>3,00€</h1>
+        
+        <div class="center content">
+            <table cellspacing="10">
+                <tr>
+                    <th></th>
+                    <th>bis</th>
+                </tr>
+                <tr>
+                    <td>Pudil</td>
+                    <td class="red" v-bind:class="{green: pudilInTime}">{{ pudilMonat }}</td>
+                </tr>
+                <tr>
+                    <td>Philipp</td>
+                    <td class="red" v-bind:class="{green: philInTime}">{{ philMonat }}</td>
+                </tr>
+                <tr>
+                    <td>Max</td>
+                    <td class="red" v-bind:class="{green: maxInTime}">{{ maxMonat }}</td>
+                </tr>
+                <tr>
+                    <td>Maurice</td>
+                    <td class="red" v-bind:class="{green: maurInTime}">{{ maurMonat }}</td>
+                </tr>
+            </table>            
+        </div>
+
+
+        <a v-bind:href="paypalMe">Gimme ma money</a>
+    </div>
+    </body>
+    <script src="vermietungs_app.js"></script>
+</html>
