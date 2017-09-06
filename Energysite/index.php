@@ -21,10 +21,12 @@ if (isset($_GET['code'])) {
   }
 } ?>
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" href="www.sturminator.de/favicon.png"/>
+  <link rel="icon" href="www.sturminator.de/favicon.png" type="image/png">
   <title>Energyselector</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
